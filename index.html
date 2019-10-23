@@ -6,11 +6,11 @@ body{
     text-align: center;
     background: #00ECB9;
   font-family: sans-serif;
-  font-weight: 600;
+  font-weight: 100;
 }
 
 h1{
-  color: 'black';
+  color: #396;
   font-weight: 100;
   font-size: 40px;
   margin: 40px 0px 20px;
@@ -46,7 +46,7 @@ h1{
 
 </style>
 
-<h1>До Элечкиной годовщины осталось</h1>
+<h1>Элечка спит уже</h1>
 <div id="clockdiv">
   <div>
     <span class="days"></span>
@@ -89,7 +89,22 @@ function getTimeRemaining(endtime) {
   };
 }
 
-function initializeClock(id, endtime) {
+function getTimeElapsed(starttime) {
+  var t = Date.parse(new Date()) - Date.parse(starttime);
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, time) {
   var clock = document.getElementById(id);
   var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
@@ -97,7 +112,7 @@ function initializeClock(id, endtime) {
   var secondsSpan = clock.querySelector('.seconds');
 
   function updateClock() {
-    var t = getTimeRemaining(endtime);
+    var t = getTimeElapsed(time);
 
     daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
@@ -113,11 +128,10 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(Date.parse('23-Nov-2019'));
+var deadline = new Date(Date.parse('23-Nov-2018'));
 initializeClock('clockdiv', deadline);
 
 </script>
-
 
 
 
